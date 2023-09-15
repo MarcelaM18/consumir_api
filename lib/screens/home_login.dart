@@ -50,12 +50,28 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const BooksScreen()));
         }
 
-      }
-      else if(response.statusCode == 401){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Bienvenido'),
+        duration: const Duration(seconds: 1),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () { },
+        ),
+      ));
+
+      }else if(response.statusCode == 401){
         final responseData = jsonDecode(response.body);
         final error = responseData['error'];
-      }
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('credenciales invalidas'),
+        duration: const Duration(seconds: 1),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () { },
+        ),
+      ));
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   labelText: 'Ingrese su contraseña',
                   hintText: 'Ingrese su correo',
-                  prefixIcon: const Icon(Icons.lock_clock),
+                  prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(onPressed: (){
                     setState(() {
                       _isVisible = !_isVisible;

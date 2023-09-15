@@ -2,6 +2,9 @@ import 'package:consumir_api/screens/admin_user_screen.dart';
 import 'package:consumir_api/screens/books_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/menu_appbar.dart';
+import '../widgets/menu_drawer.dart';
+
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
 
@@ -31,7 +34,8 @@ class _AdminScreenState extends State<AdminScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
+      drawer: const NavegationDrawer(),
+      appBar: const MenuAppbar(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

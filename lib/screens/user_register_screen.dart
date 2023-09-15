@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,40 +21,48 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
 
   final String url= 'https://apilibros-iaeu.onrender.com/api/users';
 
-  void apiLogin() async{
-    final email = emailController.text;
-    final password = passwordController.text;
-    final name = nameController.text;
+ void apiLogin() async {
+  final email = emailController.text;
+  final password = passwordController.text;
+  final name = nameController.text;
 
-    final body = jsonEncode({
-      'nombre' : name,
-      'correo' : email,
-      'contrasena' : password,
-      'rol': rol
-      
-    });
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: body
-      );
+  final body = jsonEncode({
+    'nombre': name,
+    'correo': email,
+    'contrasena': password,
+    'rol': rol
+  });
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: body,
+  );
 
-      if(response.statusCode == 201){
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Registro Exitoso'),
-          ),
-        );
-        }else{
-          ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error de Registro'),
-          ),
-        );
-        }
+  if (mounted) {
+    if (response.statusCode == 201) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Bienvenido'),
+        duration: const Duration(seconds: 1),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () { },
+        ),
+      ));
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('credenciales invalidas'),
+        duration: const Duration(seconds: 1),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () { },
+        ),
+      ));
+    }
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +79,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Nombre',
                   hintText: 'Ingrese su nombre',
-                  prefixIcon: Icon(Icons.email_outlined),
+                  prefixIcon: Icon(Icons.people_outlined),
                 ),
               ),
               TextField(
@@ -88,7 +95,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                 decoration: InputDecoration(
                   labelText: 'Ingrese su contraseña',
                   hintText: 'Ingrese su correo',
-                  prefixIcon: const Icon(Icons.lock_clock),
+                  prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(onPressed: (){
                     setState(() {
                       _isVisible = !_isVisible;
