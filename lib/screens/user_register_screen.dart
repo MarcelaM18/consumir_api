@@ -1,34 +1,38 @@
 import 'dart:convert';
 
-import 'package:consumir_api/screens/admin_screen.dart';
-import 'package:consumir_api/screens/books_screen.dart';
-import 'package:consumir_api/screens/user_register_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class UserRegisterScreen extends StatefulWidget {
+  const UserRegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<UserRegisterScreen> createState() => _UserRegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _UserRegisterScreenState extends State<UserRegisterScreen> {
+  TextEditingController nameController =  TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String rol = "Cliente";
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
    bool _isVisible = true;
 
-  final String url= 'https://apilibros-iaeu.onrender.com/api/users/login';
+  final String url= 'https://apilibros-iaeu.onrender.com/api/users';
 
   void apiLogin() async{
     final email = emailController.text;
     final password = passwordController.text;
+    final name = nameController.text;
 
     final body = jsonEncode({
+      'nombre' : name,
       'correo' : email,
-      'contrasena' : password
+      'contrasena' : password,
+      'rol': rol
+      
     });
     final response = await http.post(
       Uri.parse(url),
@@ -38,23 +42,19 @@ class _LoginScreenState extends State<LoginScreen> {
       body: body
       );
 
-      if(response.statusCode == 200){
-        final responseData = jsonDecode(response.body);
-        final rol = responseData['rol'];
-        final message = responseData['message'];
-        final nombre = responseData['nombre'];
-
-        if(rol == 'Administrador'){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
+      if(response.statusCode == 201){
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registro Exitoso'),
+          ),
+        );
         }else{
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const BooksScreen()));
+          ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error de Registro'),
+          ),
+        );
         }
-
-      }
-      else if(response.statusCode == 401){
-        final responseData = jsonDecode(response.body);
-        final error = responseData['error'];
-      }
   }
 
   @override
@@ -67,6 +67,14 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Nombre',
+                  hintText: 'Ingrese su nombre',
+                  prefixIcon: Icon(Icons.email_outlined),
+                ),
+              ),
               TextField(
                 controller: emailController,
                 decoration: const InputDecoration(
@@ -94,10 +102,12 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               ElevatedButton(onPressed: () {
                 apiLogin();
-              }, child: const Text('Iniciar Sesión')),
+                Navigator.pop(context);
+              }, child: const Text('Registrarse')),
               TextButton(onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const UserRegisterScreen()));
-              }, child: const Text('Registrarse'))
+              
+                Navigator.pop(context);
+              }, child: const Text('Cancelar', style: TextStyle(color: Colors.red),))
 
             ],
           )
