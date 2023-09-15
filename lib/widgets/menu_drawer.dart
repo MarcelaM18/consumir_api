@@ -17,7 +17,7 @@ class NavegationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.home),
-            title: const Text('Home Page'),
+            title: const Text('Inicio'),
             onTap: () {
               // Navigator.push(
               //   context,
@@ -26,15 +26,15 @@ class NavegationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.event),
-            title: const Text('Eventos'),
+            leading: const Icon(Icons.inventory_2),
+            title: const Text('Productos'),
             onTap: () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeEventos()),);
             },
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Personas'),
+            title: const Text('Productos Agotados'),
             onTap: () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ThirdPage()),);
             },
