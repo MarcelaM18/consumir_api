@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:consumir_api/screens/admin_screen.dart';
-import 'package:consumir_api/screens/books_screen.dart';
 import 'package:consumir_api/screens/user_register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -46,8 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if(rol == 'Administrador'){
           Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
-        }else{
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const BooksScreen()));
+    
+    
         }
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
