@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:consumir_api/screens/admin_screen.dart';
+import 'package:consumir_api/screens/books_screen.dart';
 import 'package:consumir_api/screens/user_register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -50,24 +51,20 @@ class _LoginScreenState extends State<LoginScreen> {
         }
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Bienvenido'),
+        content: const Text('Bienvenido', style: TextStyle(color: Color.fromRGBO(234, 191, 63, 1),),),
+        backgroundColor: Color.fromRGBO(0, 100, 101, 1),
         duration: const Duration(seconds: 1),
-        action: SnackBarAction(
-          label: 'ACTION',
-          onPressed: () { },
-        ),
+        
       ));
 
       }else if(response.statusCode == 401){
         final responseData = jsonDecode(response.body);
         final error = responseData['error'];
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('credenciales invalidas'),
+        content: const Text('Bienvenido', style: TextStyle(color: Color.fromRGBO(234, 191, 63, 1),),),
+        backgroundColor: Color.fromRGBO(0, 100, 101, 1),
         duration: const Duration(seconds: 1),
-        action: SnackBarAction(
-          label: 'ACTION',
-          onPressed: () { },
-        ),
+       
       ));
   }
 }

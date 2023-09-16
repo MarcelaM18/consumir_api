@@ -1,4 +1,5 @@
-
+import 'package:consumir_api/screens/admin_user_screen.dart';
+import 'package:consumir_api/screens/books_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/menu_appbar.dart';
@@ -20,6 +21,8 @@ class _AdminScreenState extends State<AdminScreen> {
       'Index 0: Inicio',
       style: optionStyle,
     ),
+   AdminUserScreen(),
+    BooksScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -44,13 +47,18 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
 
           BottomNavigationBarItem(
+            icon: Icon(Icons.supervised_user_circle),
+            label: 'Usuarios',
+          ),
+
+          BottomNavigationBarItem(
             icon: Icon(Icons.book),
             label: 'Libros',
           ),
 
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurple,
+        selectedItemColor: Color.fromRGBO(0, 100, 101, 1),
         onTap: _onItemTapped,
       ),
     );
