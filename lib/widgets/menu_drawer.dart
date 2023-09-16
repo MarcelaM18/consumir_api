@@ -1,3 +1,4 @@
+import 'package:consumir_api/screens/admin_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavegationDrawer extends StatelessWidget {
@@ -9,37 +10,67 @@ class NavegationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = isDarkTheme ? Colors.white : Colors.black;
+
     return Drawer(
+
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(color: Color.fromRGBO(0, 100, 101, 1)),
+            decoration: BoxDecoration(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Color.fromRGBO(0, 100, 101, 1)
+                  :  Color.fromARGB(29, 10, 105, 112),
+            ),
             child: Center(
-              child: Image.asset('assets/img/logo.png', height: 500),
+              child: Image.asset('assets/img/logo.png', height: 150),
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home),
+            leading: Icon(Icons.home, color: iconColor),
             title: const Text('Inicio'),
             onTap: () {
-              // Coloca aquí la navegación a la página de inicio
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AdminScreen()),
+              );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.event),
-            title: const Text('Eventos'),
-            onTap: () {
-              // Coloca aquí la navegación a la página de productos
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Personas'),
-            onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => ThirdPage()),);
-            },
-          ),
+          if (showMenu)
+            ListTile(
+              leading: Icon(Icons.exit_to_app, color: iconColor),
+              title: const Text('Cerrar sesión'),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Cerrar sesión'),
+                      content: const Text('¿Estás seguro de que deseas cerrar la sesión?'),
+                      actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.popUntil(context, (route) => route.isFirst);
+                            },
+                            child: const Text('Sí'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Cerrar el diálogo
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('No', style: TextStyle(color: Colors.red)),
+                          ),
+                    ],
+                    
+                    );
+                  },
+                );
+              },
+            ),
         ],
       ),
     );

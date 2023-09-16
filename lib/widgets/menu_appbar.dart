@@ -2,25 +2,14 @@ import 'package:consumir_api/main.dart';
 import 'package:flutter/material.dart';
 
 class MenuAppbar extends StatefulWidget implements PreferredSizeWidget {
-  
   final bool showMenu;
   final bool centerTitle;
 
   const MenuAppbar({Key? key, this.showMenu = true, this.centerTitle = false})
       : super(key: key);
-      
-  @override
-  State<MenuAppbar> createState() => _MenuAppbarState();
 
   @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Color.fromRGBO(0, 100, 101, 1),
-      title: Center(
-        child: Image.asset('assets/img/logo.png', height: 100),
-      ),
-    );
-  }
+  State<MenuAppbar> createState() => _MenuAppbarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(50.0);
@@ -29,7 +18,16 @@ class MenuAppbar extends StatefulWidget implements PreferredSizeWidget {
 class _MenuAppbarState extends State<MenuAppbar> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = isDarkTheme ? Colors.white : Colors.black;
+
     return AppBar(
+      backgroundColor: isDarkTheme
+          ? Color.fromARGB(29, 10, 105, 112)
+          : Color.fromRGBO(0, 100, 101, 1),
+      title: Center(
+        child: Image.asset('assets/img/logo.png', height: 100),
+      ),
       actions: [
         IconButton(
           onPressed: () {
@@ -39,8 +37,8 @@ class _MenuAppbarState extends State<MenuAppbar> {
             }
           },
           icon: Theme.of(context).brightness == Brightness.light
-              ? const Icon(Icons.dark_mode)
-              : const Icon(Icons.light_mode),
+              ? Icon(Icons.dark_mode, color: iconColor) // Color del ícono ajustado aquí
+              : Icon(Icons.light_mode, color: iconColor), // Color del ícono ajustado aquí
         )
       ],
     );

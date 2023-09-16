@@ -1,9 +1,10 @@
-import 'package:consumir_api/screens/admin_user_screen.dart';
-import 'package:consumir_api/screens/books_screen.dart';
+
 import 'package:flutter/material.dart';
 
 import '../widgets/menu_appbar.dart';
 import '../widgets/menu_drawer.dart';
+import 'book_list.dart';
+import 'home_page.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -17,12 +18,8 @@ class _AdminScreenState extends State<AdminScreen> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Inicio',
-      style: optionStyle,
-    ),
-   AdminUserScreen(),
-    BooksScreen(),
+    Home(),
+     ProductsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -46,14 +43,11 @@ class _AdminScreenState extends State<AdminScreen> {
             label: 'Inicio',
           ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.supervised_user_circle),
-            label: 'Usuarios',
-          ),
+          
 
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: 'Libros',
+            label: 'Productos',
           ),
 
         ],
@@ -64,4 +58,3 @@ class _AdminScreenState extends State<AdminScreen> {
     );
   }
 }
-
