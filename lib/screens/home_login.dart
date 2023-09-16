@@ -16,80 +16,102 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-   bool _isVisible = true;
+  bool _isVisible = true;
 
-  final String url= 'https://apilibros-iaeu.onrender.com/api/users/login';
+  final String url = 'https://apilibros-iaeu.onrender.com/api/users/login';
 
-  void apiLogin() async{
+  void apiLogin() async {
     final email = emailController.text;
     final password = passwordController.text;
 
-    final body = jsonEncode({
-      'correo' : email,
-      'contrasena' : password
-    });
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: body
-      );
+    final body = jsonEncode({'correo': email, 'contrasena': password});
+    final response = await http.post(Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: body);
 
-      if(response.statusCode == 200){
-        final responseData = jsonDecode(response.body);
-        final rol = responseData['rol'];
-        final message = responseData['message'];
-        final nombre = responseData['nombre'];
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      final rol = responseData['rol'];
+      final pass = responseData['contrasena'];
+      final mail = responseData['correo'];
+      final message = responseData['message'];
+      final nombre = responseData['nombre'];
 
-        if(rol == 'Administrador'){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
-    
-    
+      if (rol == 'Administrador') {
+        if (password == pass) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Color.fromARGB(255, 197, 8, 8),
+            content: const Text('Correo o contraseña incorrectas'),
+            duration: const Duration(seconds: 1),
+            action: SnackBarAction(
+              label: 'Error',
+              textColor: Color.fromRGBO(255, 255, 255, 1),
+              onPressed: () {},
+            ),
+          ));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Color.fromARGB(255, 0, 100, 101),
+              content: const Text('Bienvenido '),
+              duration: const Duration(seconds: 1),
+              action: SnackBarAction(
+                label: 'Cosmetic',
+                textColor: Color.fromRGBO(234, 191, 63, 1),
+                onPressed: () {},
+              ),
+            ),
+          );
+
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AdminScreen()));
+          emailController.clear();
+          passwordController.clear();
         }
-
-        ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Color.fromARGB(255, 0, 100, 101),
-          content: const Text('Bienvenido'),
-          duration: const Duration(seconds: 1),
-          action: SnackBarAction(
-            label: 'Cosmetic',
-            textColor: Color.fromRGBO(234, 191, 63, 1),
-            onPressed: () {},
-          ),
-        ),
-      );
-      }else if(response.statusCode == 401){
-        final responseData = jsonDecode(response.body);
-        final error = responseData['error'];
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Color.fromARGB(255, 197, 8, 8),
-        content: const Text('credenciales invalidas'),
+          content: const Text('No cuenta con el rol de administrador'),
+          duration: const Duration(seconds: 1),
+          action: SnackBarAction(
+            label: 'Error',
+            textColor: Color.fromRGBO(255, 255, 255, 1),
+            onPressed: () {},
+          ),
+        ));
+      }
+    } else if (response.statusCode == 401) {
+      final responseData = jsonDecode(response.body);
+      final error = responseData['error'];
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Color.fromARGB(255, 197, 8, 8),
+        content: const Text('Correo o contraseña incorrectas'),
         duration: const Duration(seconds: 1),
         action: SnackBarAction(
           label: 'Error',
           textColor: Color.fromRGBO(255, 255, 255, 1),
-          onPressed: () { },
+          onPressed: () {},
         ),
       ));
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(50.0),
         child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
                   height: 100,
                 ),
-              SizedBox(
+                SizedBox(
                   width: 300,
                   height: 200,
                   child: ClipRRect(
@@ -101,10 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 50),
-              SizedBox(
+                SizedBox(
                   width: 325.0,
                   child: TextFormField(
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: "Correo electrónico",
                       hintText: "Ingrese el correo",
@@ -124,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20.0),
                 SizedBox(
                   width: 325.0,
-                child: TextFormField(
+                  child: TextFormField(
                     controller: passwordController,
                     obscureText: _isVisible,
                     decoration: InputDecoration(
@@ -153,37 +176,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                 ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-              onPressed: () {
-                apiLogin();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(0, 100, 101, 1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              child: Container(
-                width: 150.0,
-                padding: const EdgeInsets.all(8.0),
-                child: const Center(
-                  child: Text(
-                    'Iniciar sesión',
-                    style: TextStyle(
-                      color: Color.fromRGBO(234, 191, 63, 1),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      apiLogin();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color.fromRGBO(0, 100, 101, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                ),
-              ),
-            )
-
-            ],
-          )
-        ),
+                  child: Container(
+                    width: 150.0,
+                    padding: const EdgeInsets.all(8.0),
+                    child: const Center(
+                      child: Text(
+                        'Iniciar sesión',
+                        style: TextStyle(
+                          color: Color.fromRGBO(234, 191, 63, 1),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )),
       ),
-
     );
   }
 }
-
