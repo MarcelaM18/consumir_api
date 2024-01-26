@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Distribuidora Cosmetic',
+                'Distribuidora Monvel',
                 style: TextStyle(
                   color: const Color.fromRGBO(0, 100, 101, 1),
                   fontSize: 24,
