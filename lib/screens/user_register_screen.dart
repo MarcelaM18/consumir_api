@@ -43,16 +43,16 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
   if (mounted) {
     if (response.statusCode == 201) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Bienvenido', style: TextStyle(color: Color.fromRGBO(234, 191, 63, 1),),),
-        backgroundColor: Color.fromRGBO(0, 100, 101, 1),
+        content: const Text('Bienvenido', style: TextStyle(color: Color.fromRGBO(235, 234, 236, 1),),),
+        backgroundColor: Color.fromRGBO(102, 51, 153, 1),
         duration: const Duration(seconds: 1),
       
       ));
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('credenciales invalidas', style: TextStyle(color: Color.fromRGBO(234, 191, 63, 1),),),
-         backgroundColor: Color.fromRGBO(0, 100, 101, 1),
+        content: const Text('credenciales invalidas', style: TextStyle(color: Color.fromRGBO(235, 234, 236, 1),),),
+         backgroundColor: Color.fromRGBO(102, 51, 153, 1),
         duration: const Duration(seconds: 1),
        
       ));

@@ -1,9 +1,11 @@
 
+import 'package:consumir_api/screens/purchases_list.dart';
+import 'package:consumir_api/screens/products_list.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/menu_appbar.dart';
 import '../widgets/menu_drawer.dart';
-import 'book_list.dart';
+
 import 'home_page.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -20,6 +22,7 @@ class _AdminScreenState extends State<AdminScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
      ProductsScreen(),
+     PurchasesScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -43,16 +46,19 @@ class _AdminScreenState extends State<AdminScreen> {
             label: 'Inicio',
           ),
 
-          
-
           BottomNavigationBarItem(
-            icon: Icon(Icons.book),
+            icon: Icon(Icons.inventory_2),
             label: 'Productos',
+          ),
+
+           BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Compras',
           ),
 
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromRGBO(0, 100, 101, 1),
+        selectedItemColor: Color.fromRGBO(102, 51, 153, 1),
         onTap: _onItemTapped,
       ),
     );

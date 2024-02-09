@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
               Text(
                 'Distribuidora Monvel',
                 style: TextStyle(
-                  color: const Color.fromRGBO(0, 100, 101, 1),
+                  color: const Color.fromRGBO(102, 51, 153, 1),
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),

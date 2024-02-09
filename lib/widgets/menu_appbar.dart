@@ -24,9 +24,9 @@ class _MenuAppbarState extends State<MenuAppbar> {
     return AppBar(
       backgroundColor: isDarkTheme
           ? Color.fromARGB(29, 10, 105, 112)
-          : Color.fromRGBO(0, 100, 101, 1),
+          : Color.fromRGBO(102, 51, 153, 1),
       title: Center(
-        child: Image.asset('assets/img/logo.png', height: 100),
+        child: Image.asset('assets/img/logo.png', height: 100, color: Colors.grey[400]),
       ),
       actions: [
         IconButton(

@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isVisible = true;
 
-  final String url = 'https://node-proyect-api.onrender.com/api/users/login';
+  final String url = 'https://cosmetic-api-yrcb.onrender.com/api/users/login';
 
   void apiLogin() async {
     final email = emailController.text;
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              backgroundColor: Color.fromARGB(255, 0, 100, 101),
+              backgroundColor: Color.fromRGBO(102, 51, 153, 1),
               content: const Text('Bienvenido'),
               duration: const Duration(seconds: 1),
             ),
@@ -96,10 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 height: 200,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(50.0),
                   child: Image.asset(
-                    'assets/img/cosmetic.jpeg',
+                    'assets/img/logo.png',
                     fit: BoxFit.cover,
+                    color: null,
+                    
                   ),
                 ),
               ),
@@ -165,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: const Color.fromRGBO(0, 100, 101, 1),
+                  primary: const Color.fromRGBO(102, 51, 153, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -177,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       'Iniciar sesión',
                       style: TextStyle(
-                        color: Color.fromRGBO(234, 191, 63, 1),
+                        color: Color.fromRGBO(235, 234, 236, 1),
                       ),
                     ),
                   ),

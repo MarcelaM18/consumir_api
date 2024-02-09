@@ -1,4 +1,6 @@
 import 'package:consumir_api/screens/admin_screen.dart';
+import 'package:consumir_api/screens/purchases_list.dart';
+import 'package:consumir_api/screens/products_list.dart';
 import 'package:flutter/material.dart';
 
 class NavegationDrawer extends StatelessWidget {
@@ -13,7 +15,8 @@ class NavegationDrawer extends StatelessWidget {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     final iconColor = isDarkTheme ? Colors.white : Colors.black;
 
-    return Drawer(
+    return 
+    Drawer(
 
       child: ListView(
         padding: EdgeInsets.zero,
@@ -21,11 +24,11 @@ class NavegationDrawer extends StatelessWidget {
           DrawerHeader(
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.light
-                  ? Color.fromRGBO(0, 100, 101, 1)
+                  ? Color.fromRGBO(102, 51, 153, 1)
                   :  Color.fromARGB(29, 10, 105, 112),
             ),
             child: Center(
-              child: Image.asset('assets/img/logo.png', height: 150),
+              child: Image.asset('assets/img/logo.png', height: 150, color: Colors.grey[350]),
             ),
           ),
           ListTile(
@@ -38,6 +41,7 @@ class NavegationDrawer extends StatelessWidget {
               );
             },
           ),
+        
           if (showMenu)
             ListTile(
               leading: Icon(Icons.exit_to_app, color: iconColor),
